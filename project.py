@@ -3,17 +3,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 import numpy as np
-import os
 import datetime
 sns.set(style='dark')
 
-os.getcwd()
-os.chdir("C:\\Users\\meina\\OneDrive\\Documents\\project")
-
 #Data Gathering
-daily = pd.read_csv("dataset\\day.csv")
+daily = pd.read_csv("day.csv")
 daily.head()
-hourly = pd.read_csv("dataset\\hour.csv")
+hourly = pd.read_csv("hour.csv")
 hourly.head()
 
 #Data Assessing

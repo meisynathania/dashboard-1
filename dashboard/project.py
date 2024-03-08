@@ -3,17 +3,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 import numpy as np
-import os
 import datetime
 sns.set(style='dark')
 
-os.getcwd()
-os.chdir("C:\\Users\\meina\\OneDrive\\Documents\\project")
-
 #Data Gathering
-daily = pd.read_csv("dataset\\day.csv")
+daily = pd.read_csv("dataset/day.csv")
 daily.head()
-hourly = pd.read_csv("dataset\\hour.csv")
+hourly = pd.read_csv("dataset/hour.csv")
 hourly.head()
 
 #Data Assessing
@@ -46,12 +42,12 @@ hourly['workingday'].replace([0,1],['weekend/holiday','workingday'],inplace=True
 hourly.info()
 
 #Download Clean Data
-hourly.to_csv("hourly_clean.csv", index=False)
-daily.to_csv("daily_clean.csv", index=False)
+#hourly.to_csv("hourly_clean.csv", index=False)
+#daily.to_csv("daily_clean.csv", index=False)
 
 #Exploratory Data Analysis
-clean_day = pd.read_csv("daily_clean.csv")
-clean_hour = pd.read_csv("hourly_clean.csv")
+clean_day = pd.read_csv("dashboard/daily_clean.csv")
+clean_hour = pd.read_csv("dashboard/hourly_clean.csv")
 clean_day.describe(include = "all")
 clean_hour.describe(include = "all")
 

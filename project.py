@@ -43,27 +43,28 @@ hourly.info()
 
 #Download Clean Data
 hourly.to_csv("hourly_clean.csv", index=False)
+daily.to_csv("daily_clean.csv", indef=False)
 
 #Exploratory Data Analysis
-daily.describe(include = "all")
-hourly.describe(include = "all")
+daily_clean.describe(include = "all")
+hourly_clean.describe(include = "all")
 
 ##perbandingan sepeda tersewa holiday vs not holiday
-daily.groupby(by="holiday").agg({
+daily_clean.groupby(by="holiday").agg({
     "instant": "nunique",
     "cnt": ["max", "min", "mean", "std"]
 })
-hourly.groupby(by="hr").agg({
+hourly_clean.groupby(by="hr").agg({
     "cnt": ["max", "min", "mean", "std"],
 })
 
 #jam-jam peak
-hourly.groupby(by="hr").agg({
+hourly_clean.groupby(by="hr").agg({
     "cnt": ["max", "min", "mean", "std"],
 })
 
 #perbandingan tiap musim
-seasonal = pd.DataFrame(daily.groupby(by=["season","yr"]).agg({
+seasonal = pd.DataFrame(daily_clean.groupby(by=["season","yr"]).agg({
     "cnt": ["sum"],
 }).unstack())
 #visualisasi tiap musim
@@ -71,7 +72,7 @@ grouped_data = seasonal.groupby(['season'])['cnt'].sum().unstack()
 grouped_data.plot(kind='bar', colormap='tab20')
 
 #perbandingan tiap jam
-hourly_day = hourly[hourly["dteday"] == '2011-01-01']
+hourly_day = hourly_clean[hourly_clean["dteday"] == '2011-01-01']
 #tanggalnya dapat diganti untuk melihat perubahan per hari
 ##visualisasi
 plt.figure(figsize=(10, 5)) 
@@ -93,8 +94,8 @@ if sidebarOpt == 'Daily Report' or sidebarOpt =='':
         label='Pilih Tanggal',
         value = datetime.date(2011, 1, 1)
     )
-    hourly_day = hourly[hourly["dteday"] == str(dateInput)] #subset data per hari
-    daily_day = daily[daily["dteday"] == str(dateInput)]
+    hourly_day = hourly_clean[hourly_clean["dteday"] == str(dateInput)] #subset data per hari
+    daily_day = daily_clean[daily_clean["dteday"] == str(dateInput)]
     totalcnt = daily_day.cnt.sum()
     st.metric("Total Sepeda Tersewa", value = totalcnt)
     plt.figure(figsize=(10, 5)) 
@@ -110,7 +111,7 @@ elif sidebarOpt == 'Seasonal Report':
     year = ['2011', '2012']
     selected_year = st.radio("Tahun", 
                              year, key="2011")
-    subset_data = daily[(daily['yr'] == selected_year)]
+    subset_data = daily_clean[(daily_clean['yr'] == selected_year)]
     seasonal = subset_data.groupby('season')['cnt'].sum()
     fig, ax = plt.subplots(figsize = (10, 5))
     ax.bar(seasonal.index, seasonal.values,

@@ -1,2 +1,2 @@
 url
-https://bikedashboard-meisy.streamlit.app/
+https://bikedash-meisy.streamlit.app/
